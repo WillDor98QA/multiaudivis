@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MULTIAUDIVIS - Multimedia Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FF4500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .logo::after {
+            content: 'MULTIAUDIVIS';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            font-size: 0.3em;
+            color: #666;
+            letter-spacing: 3px;
+            font-weight: 400;
+            background: none;
+            -webkit-text-fill-color: #666;
+        }
+
+        /* Geometric Background Elements */
+        .geometric-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 600px;
+            transform: rotate(45deg);
+            top: -200px;
+            right: -100px;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 400px;
+            transform: rotate(-30deg);
+            bottom: -150px;
+            left: -50px;
+            clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 0% 100%);
+        }
+
+        /* Page sections */
+        .page {
+            min-height: 100vh;
+            padding-top: 120px;
+            position: relative;
+        }
+
+        /* Content sections */
+        .content-section {
+            background: #fff;
+            margin: 3rem 0;
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+            text-align: center;
+            position: relative;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+        }
+
+        /* Video Section Styles */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .video-item {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.15);
+        }
+
+        .video-player {
+            width: 100%;
+            height: 250px;
+            border: none;
+            background: #000;
+        }
+
+        .video-info {
+            padding: 2rem;
+        }
+
+        .video-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .video-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Audio Section Styles */
+        .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .audio-item {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(247, 147, 30, 0.05));
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .audio-item:hover::before {
+            opacity: 1;
+        }
+
+        .audio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.15);
+        }
+
+        .audio-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .audio-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .audio-info h4 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .audio-info .audio-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+        }
+
+        .audio-player::-webkit-media-controls-panel {
+            background-color: rgba(255, 107, 53, 0.1);
+        }
+
+        .audio-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .section-divider h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-divider h2::after {
+            display: none;
+        }
+
+        .section-divider p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .audio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .video-player {
+                height: 200px;
+            }
+
+            .audio-item {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-item {
+                margin: 0 -10px;
+            }
+
+            .video-player {
+                height: 180px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">M</a>
+        </div>
+    </nav>
+
+    <!-- Multimedia Showcase Page -->
+    <div id="multimedia" class="page">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+        </div>
+        
+        <div class="container">
+            <!-- Video Section -->
+            <div class="content-section fade-in">
+                <h2>Our Video Productions</h2>
+                
+                <div class="video-grid">
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/FF6B35/ffffff?text=Choral+Performance+1">
+                            <source src="sample-video1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Sacred Choral Concert</h3>
+                            <p>A beautiful evening of sacred music featuring our professional choral ensemble performing timeless classics in perfect harmony.</p>
+                            <div class="video-meta">
+                                <span>📅 March 2024</span>
+                                <span>⏱️ 12:45</span>
+                                <span>🎵 Classical</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/F7931E/ffffff?text=Choral+Performance+2">
+                            <source src="sample-video2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Contemporary Choral Works</h3>
+                            <p>Modern choral compositions showcasing innovative arrangements and dynamic vocal techniques in a stunning venue.</p>
+                            <div class="video-meta">
+                                <span>📅 February 2024</span>
+                                <span>⏱️ 18:30</span>
+                                <span>🎵 Contemporary</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/FF4500/ffffff?text=Behind+the+Scenes">
+                            <source src="sample-video3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Behind the Scenes</h3>
+                            <p>Get an exclusive look at our recording process, from setup to final mix, showcasing our professional audio engineering.</p>
+                            <div class="video-meta">
+                                <span>📅 January 2024</span>
+                                <span>⏱️ 8:15</span>
+                                <span>🎵 Documentary</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/FF6B35/ffffff?text=Live+Recording">
+                            <source src="sample-video4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Live Recording Session</h3>
+                            <p>Experience the magic of a live multi-track recording session featuring our advanced equipment and techniques.</p>
+                            <div class="video-meta">
+                                <span>📅 December 2023</span>
+                                <span>⏱️ 25:12</span>
+                                <span>🎵 Live Session</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <h2>Audio Excellence</h2>
+                <p>Listen to our professional recordings and experience the quality of our sound engineering</p>
+            </div>
+
+            <!-- Audio Section -->
+            <div class="content-section fade-in">
+                <h2>Our Audio Productions</h2>
+                
+                <div class="audio-grid">
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎵</div>
+                            <div class="audio-info">
+                                <h4>Choral Masterpiece</h4>
+                                <div class="audio-subtitle">Classical Sacred Music</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio1.mp3" type="audio/mpeg">
+                            <source src="sample-audio1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            A pristine recording of a classical choral piece showcasing our multi-track recording capabilities and post-production expertise.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎤</div>
+                            <div class="audio-info">
+                                <h4>Solo Performance</h4>
+                                <div class="audio-subtitle">Contemporary Vocal</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio2.mp3" type="audio/mpeg">
+                            <source src="sample-audio2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            An intimate solo vocal recording demonstrating our precision in capturing individual performances with clarity and warmth.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎹</div>
+                            <div class="audio-info">
+                                <h4>Piano & Choir</h4>
+                                <div class="audio-subtitle">Mixed Ensemble</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio3.mp3" type="audio/mpeg">
+                            <source src="sample-audio3.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            A beautiful blend of piano accompaniment and choral voices, perfectly balanced through our advanced mixing techniques.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎼</div>
+                            <div class="audio-info">
+                                <h4>Live Concert</h4>
+                                <div class="audio-subtitle">Full Performance</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio4.mp3" type="audio/mpeg">
+                            <source src="sample-audio4.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            Captured live from our recent concert, this recording showcases our live sound engineering expertise and venue acoustics.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🔊</div>
+                            <div class="audio-info">
+                                <h4>Audio Demo Reel</h4>
+                                <div class="audio-subtitle">Showcase Mix</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio5.mp3" type="audio/mpeg">
+                            <source src="sample-audio5.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            A compilation of our finest work demonstrating the range and quality of our audio production services.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎛️</div>
+                            <div class="audio-info">
+                                <h4>Studio Session</h4>
+                                <div class="audio-subtitle">Raw Recording</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio6.mp3" type="audio/mpeg">
+                            <source src="sample-audio6.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            An unprocessed studio recording showing the natural quality we capture before any post-production enhancement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple fade-in animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on load
+
+        // Add loading states for media
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            const audios = document.querySelectorAll('audio');
+
+            videos.forEach(video => {
+                video.addEventListener('loadstart', function() {
+                    this.style.opacity = '0.7';
+                });
+                video.addEventListener('loadeddata', function() {
+                    this.style.opacity = '1';
+                });
+            });
+
+            audios.forEach(audio => {
+                audio.addEventListener('loadstart', function() {
+                    this.style.opacity = '0.7';
+                });
+                audio.addEventListener('loadeddata', function() {
+                    this.style.opacity = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

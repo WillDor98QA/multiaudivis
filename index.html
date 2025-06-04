@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAV - Multi Audivis | Professional Sound Production</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FF4500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .logo img {
+            height: 48px;
+            width: auto;
+            display: block;
+        }
+
+        .logo::after {
+            content: 'MULTIAUDIVIS';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            font-size: 0.3em;
+            color: #666;
+            letter-spacing: 3px;
+            font-weight: 400;
+            background: none;
+            -webkit-text-fill-color: #666;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0;
+            transition: color 0.3s;
+            position: relative;
+            overflow: visible;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.3rem;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            border-radius: 2px;
+        }
+
+        .nav-link.active::before,
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #FF6B35;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile menu toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #FF6B35;
+            transition: 0.3s;
+        }
+
+        /* Geometric Background Elements */
+        .geometric-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 600px;
+            transform: rotate(45deg);
+            top: -200px;
+            right: -100px;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 400px;
+            transform: rotate(-30deg);
+            bottom: -150px;
+            left: -50px;
+            clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 0% 100%);
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 300px;
+            transform: rotate(60deg);
+            top: 50%;
+            left: 10%;
+            opacity: 0.05;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        /* Page sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 120px;
+            position: relative;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(247, 147, 30, 0.05) 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: 60vh;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero-text .highlight {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-logo {
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: -8px;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FF4500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Content sections */
+        .content-section {
+            background: #fff;
+            margin: 3rem 0;
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+            text-align: center;
+            position: relative;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(247, 147, 30, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.15);
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .service-card .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Equipment showcase */
+        .equipment-showcase {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: #fff;
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .equipment-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .equipment-showcase h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .equipment-showcase p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(247, 147, 30, 0.05));
+            border-radius: 10px;
+        }
+
+        .contact-item .icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #FF6B35;
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 90px);
+                background: #fff;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-logo {
+                font-size: 5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Video Section Styles */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .video-item {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.15);
+        }
+
+        .video-player {
+            width: 100%;
+            height: 250px;
+            border: none;
+            background: #000;
+        }
+
+        .video-info {
+            padding: 2rem;
+        }
+
+        .video-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .video-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Audio Section Styles */
+        .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .audio-item {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(247, 147, 30, 0.05));
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .audio-item:hover::before {
+            opacity: 1;
+        }
+
+        .audio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.15);
+        }
+
+        .audio-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .audio-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .audio-info h4 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .audio-info .audio-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+        }
+
+        .audio-player::-webkit-media-controls-panel {
+            background-color: rgba(255, 107, 53, 0.1);
+        }
+
+        .audio-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .section-divider h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-divider h2::after {
+            display: none;
+        }
+
+        .section-divider p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .audio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .video-player {
+                height: 200px;
+            }
+
+            .audio-item {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-item {
+                margin: 0 -10px;
+            }
+
+            .video-player {
+                height: 180px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo"><img src="MAV logo.webp" alt=""></a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                <li><a href="#" class="nav-link" data-page="services">Services</a></li>
+                <li><a href="#" class="nav-link" data-page="equipment">Equipment</a></li>
+                <li><a href="#" class="nav-link" data-page="Production">Productions</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+            <div class="mobile-toggle" id="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+            <div class="geometric-shape shape-3"></div>
+        </div>
+        
+        <div class="container">
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-text slide-in-left">
+                        <h1>Multi-track recording services for <span class="highlight">live choral events</span></h1>
+                        <p>Capturing every nuance of your performance with crystal-clear sound engineering specialized for choral music.</p>
+                        <a href="#" class="cta-button" data-page="contact">Start Your Project</a>
+                    </div>
+                    <div class="hero-visual slide-in-right">
+                        <div class="hero-logo">MAV</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section fade-in">
+                <h2>Professional Sound Production</h2>
+                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem; color: #666;">
+                    Need crystal-clear sound for your next event? I'm a sound engineer specializing in live choral music, 
+                    and I'm passionate about making every performance sound its absolute best.
+                </p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎵</div>
+                        <h3>Live Sound Engineering</h3>
+                        <p>Professional audio engineering specifically tailored for choral performances. Every voice, every note, perfectly balanced for your venue.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎙️</div>
+                        <h3>Multi-Track Recording</h3>
+                        <p>Capture every nuance of your live choral events with professional multi-track recording services that preserve the full richness of your performance.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎹</div>
+                        <h3>Equipment Rental</h3>
+                        <p>Premium Yamaha SX720 keyboard rentals - the ideal choice for choirs with realistic piano and organ sounds that bring your music to life.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-showcase fade-in">
+                <h3>Yamaha SX720 - Elevate Your Choir's Sound</h3>
+                <p>The ideal choice for choirs! Its realistic piano and organ sounds will bring your music to life. 
+                Contact me today to book your Yamaha SX720 rental and experience the difference.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Page -->
+    <div id="services" class="page">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+        </div>
+        
+        <div class="container">
+            <div class="content-section fade-in">
+                <h2>Our Services</h2>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎵</div>
+                        <h3>Live Sound Engineering</h3>
+                        <p>Specializing in live choral music with years of experience in creating the perfect acoustic environment. 
+                        We understand the unique challenges of choral performances and provide tailored solutions.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>Pre-event acoustic analysis</li>
+                            <li>Professional microphone setup</li>
+                            <li>Real-time sound mixing</li>
+                            <li>Venue-specific optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🎙️</div>
+                        <h3>Multi-Track Recording</h3>
+                        <p>Capture the full depth and richness of your choral performances with our multi-track recording services. 
+                        Perfect for preserving special events or creating professional recordings.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>High-quality digital recording</li>
+                            <li>Individual voice section isolation</li>
+                            <li>Post-production mixing available</li>
+                            <li>Multiple format delivery</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🎬</div>
+                        <h3>Video Editing</h3>
+                        <p>Transform your raw choral performance footage into polished, professional videos. Our editing services 
+                        enhance your recordings with expert post-production techniques tailored for musical performances.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>Multi-camera angle editing</li>
+                            <li>Audio-video synchronization</li>
+                            <li>Color correction and enhancement</li>
+                            <li>Custom titles and graphics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">📹</div>
+                        <h3>Choral Coverage</h3>
+                        <p>Comprehensive video documentation of your choral events from rehearsals to performances. 
+                        We capture every moment with professional equipment and expertise in choral videography.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>Multi-camera setup</li>
+                            <li>Professional lighting assessment</li>
+                            <li>Full performance documentation</li>
+                            <li>Behind-the-scenes coverage</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">📺</div>
+                        <h3>Choral Music TV</h3>
+                        <p>Broadcast-quality production services for choral music television programming. From concept to 
+                        final broadcast, we handle all aspects of TV production for choral music content.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>TV-quality production standards</li>
+                            <li>Live broadcast capabilities</li>
+                            <li>Multi-format distribution</li>
+                            <li>Professional broadcast team</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🎹</div>
+                        <h3>Equipment Rental</h3>
+                        <p>Access professional-grade audio equipment for your events. Our rental service includes setup, 
+                        operation guidance, and technical support throughout your event.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>Yamaha SX720 keyboard rental</li>
+                            <li>Professional audio systems</li>
+                            <li>Microphone packages</li>
+                            <li>On-site technical support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">💡</div>
+                        <h3>Consultation Services</h3>
+                        <p>Not sure what you need? We offer consultation services to help you plan the perfect audio setup 
+                        for your specific event and venue requirements.</p>
+                        <ul style="margin-top: 1.5rem; padding-left: 1.5rem; color: #666;">
+                            <li>Venue acoustic assessment</li>
+                            <li>Equipment recommendations</li>
+                            <li>Budget planning assistance</li>
+                            <li>Technical requirement analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Equipment Page -->
+    <div id="equipment" class="page">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-2"></div>
+            <div class="geometric-shape shape-3"></div>
+        </div>
+        
+        <div class="container">
+            <div class="content-section fade-in">
+                <h2>Professional Equipment</h2>
+                
+                <div class="equipment-showcase">
+                    <h3>Yamaha SX720 - The Choir's Best Friend</h3>
+                    <p style="font-size: 1.2rem; margin: 2rem 0;">
+                        The Yamaha SX720 is specifically chosen for choral performances due to its exceptional 
+                        realistic piano and organ sounds that complement vocal arrangements perfectly.
+                    </p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎹</div>
+                        <h3>Premium Sound Quality</h3>
+                        <p>Authentic piano and organ tones that blend seamlessly with choral voices, creating a rich, full sound experience that enhances every performance.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🎵</div>
+                        <h3>Choir-Optimized Features</h3>
+                        <p>Built-in features specifically designed to support choral performances, including optimal vocal frequency response and accompaniment settings.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🔧</div>
+                        <h3>Professional Setup</h3>
+                        <p>Complete setup and configuration included with rental, ensuring optimal performance for your specific venue and acoustic requirements.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">📞</div>
+                        <h3>Technical Support</h3>
+                        <p>Full technical support throughout your event, including on-site assistance if needed to ensure flawless performance.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 4rem; padding: 3rem; background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(247, 147, 30, 0.05)); border-radius: 20px;">
+                    <h3 style="color: #333; margin-bottom: 1rem; font-size: 2rem;">Ready to Elevate Your Choir's Sound?</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #666;">
+                        Contact us today to book your Yamaha SX720 rental and experience the difference professional equipment makes.
+                    </p>
+                    <a href="#" class="cta-button" data-page="contact">Book Your Rental</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-3"></div>
+        </div>
+        
+        <div class="container">
+            <div class="content-section fade-in">
+                <h2>About MAV - Multi Audivis</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; margin-top: 3rem;">
+                    <div class="slide-in-left">
+                        <h3 style="color: #333; margin-bottom: 1.5rem; font-size: 2rem;">Our Passion</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">
+                            As a dedicated sound engineer specializing in live choral music, I am passionate about 
+                            making every performance sound its absolute best. There's something magical about the 
+                            human voice in harmony, and my mission is to ensure that magic is heard clearly by every audience member.
+                        </p>
+                    </div>
+                    
+                    <div class="slide-in-right">
+                        <h3 style="color: #333; margin-bottom: 1.5rem; font-size: 2rem;">Our Expertise</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">
+                            With years of experience in choral sound engineering, I understand the unique acoustic 
+                            challenges that choirs face. From intimate chapel performances to large concert halls, 
+                            each venue requires a tailored approach to achieve perfect sound clarity and balance.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="equipment-showcase" style="margin-top: 4rem;">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 2rem;">Why Choose MAV?</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🎵</div>
+                            <h4 style="margin-bottom: 1rem;">Specialized Focus</h4>
+                            <p>Dedicated exclusively to choral music with deep understanding of vocal acoustics.</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🔧</div>
+                            <h4 style="margin-bottom: 1rem;">Professional Equipment</h4>
+                            <p>Top-tier audio equipment specifically chosen for choral performance optimization.</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+                            <h4 style="margin-bottom: 1rem;">Expert Guidance</h4>
+                            <p>Personalized consultation and support to ensure your choir achieves the best possible sound in any venue.</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+                            <h4 style="margin-bottom: 1rem;">Reliable Partnership</h4>
+                            <p>Committed to your success with responsive service and a passion for choral excellence at every step.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multimedia Showcase Page -->
+    <div id="Production" class="page">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+        </div>
+        
+        <div class="container">
+            <!-- Video Section -->
+            <div class="content-section fade-in">
+                <h2>Our Video Productions</h2>
+                
+                <div class="video-grid">
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/FF6B35/ffffff?text=Choral+Performance+1">
+                            <source src="inzaghi video 1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Sacred Choral Concert</h3>
+                            <p>A beautiful evening of sacred music featuring our professional choral ensemble performing timeless classics in perfect harmony.</p>
+                            <div class="video-meta">
+                                <span>📅 March 2024</span>
+                                <span>⏱️ 12:45</span>
+                                <span>🎵 Classical</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/F7931E/ffffff?text=Choral+Performance+2">
+                            <source src="inzaghi video 4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Contemporary Choral Works</h3>
+                            <p>Modern choral compositions showcasing innovative arrangements and dynamic vocal techniques in a stunning venue.</p>
+                            <div class="video-meta">
+                                <span>📅 February 2024</span>
+                                <span>⏱️ 18:30</span>
+                                <span>🎵 Contemporary</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/FF4500/ffffff?text=Behind+the+Scenes">
+                            <source src="inzaghi video 2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Behind the Scenes</h3>
+                            <p>Get an exclusive look at our recording process, from setup to final mix, showcasing our professional audio engineering.</p>
+                            <div class="video-meta">
+                                <span>📅 January 2024</span>
+                                <span>⏱️ 8:15</span>
+                                <span>🎵 Documentary</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <video class="video-player" controls poster="https://via.placeholder.com/600x250/FF6B35/ffffff?text=Live+Recording">
+                            <source src="inzaghi video 3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3>Live Recording Session</h3>
+                            <p>Experience the magic of a live multi-track recording session featuring our advanced equipment and techniques.</p>
+                            <div class="video-meta">
+                                <span>📅 December 2023</span>
+                                <span>⏱️ 25:12</span>
+                                <span>🎵 Live Session</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <h2>Audio Excellence</h2>
+                <p>Listen to our professional recordings and experience the quality of our sound engineering</p>
+            </div>
+
+            <!-- Audio Section -->
+            <div class="content-section fade-in">
+                <h2>Our Audio Productions</h2>
+                
+                <div class="audio-grid">
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎵</div>
+                            <div class="audio-info">
+                                <h4>Choral Masterpiece</h4>
+                                <div class="audio-subtitle">Classical Sacred Music</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio1.mp3" type="audio/mpeg">
+                            <source src="sample-audio1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            A pristine recording of a classical choral piece showcasing our multi-track recording capabilities and post-production expertise.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎤</div>
+                            <div class="audio-info">
+                                <h4>Solo Performance</h4>
+                                <div class="audio-subtitle">Contemporary Vocal</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio2.mp3" type="audio/mpeg">
+                            <source src="sample-audio2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            An intimate solo vocal recording demonstrating our precision in capturing individual performances with clarity and warmth.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎹</div>
+                            <div class="audio-info">
+                                <h4>Piano & Choir</h4>
+                                <div class="audio-subtitle">Mixed Ensemble</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio3.mp3" type="audio/mpeg">
+                            <source src="sample-audio3.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            A beautiful blend of piano accompaniment and choral voices, perfectly balanced through our advanced mixing techniques.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎼</div>
+                            <div class="audio-info">
+                                <h4>Live Concert</h4>
+                                <div class="audio-subtitle">Full Performance</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio4.mp3" type="audio/mpeg">
+                            <source src="sample-audio4.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            Captured live from our recent concert, this recording showcases our live sound engineering expertise and venue acoustics.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🔊</div>
+                            <div class="audio-info">
+                                <h4>Audio Demo Reel</h4>
+                                <div class="audio-subtitle">Showcase Mix</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio5.mp3" type="audio/mpeg">
+                            <source src="sample-audio5.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            A compilation of our finest work demonstrating the range and quality of our audio production services.
+                        </p>
+                    </div>
+
+                    <div class="audio-item">
+                        <div class="audio-header">
+                            <div class="audio-icon">🎛️</div>
+                            <div class="audio-info">
+                                <h4>Studio Session</h4>
+                                <div class="audio-subtitle">Raw Recording</div>
+                            </div>
+                        </div>
+                        <audio class="audio-player" controls>
+                            <source src="sample-audio6.mp3" type="audio/mpeg">
+                            <source src="sample-audio6.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-description">
+                            An unprocessed studio recording showing the natural quality we capture before any post-production enhancement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="geometric-bg">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+        </div>
+        
+        <div class="container">
+            <div class="content-section fade-in">
+                <h2>Contact Us</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <p>Have questions or ready to discuss your project? Feel free to reach out!</p>
+                        
+                        <div class="contact-item">
+                            <div class="icon">📍</div>
+                            <div>
+                                <strong>Location:</strong> Your Location
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="icon">✉️</div>
+                            <div>
+                                <strong>Email:</strong> your.email@example.com
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="icon">📞</div>
+                            <div>
+                                <strong>Phone:</strong> +123 456 7890
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <form action="#" method="POST">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service">Interested Service</label>
+                                <select id="service" name="service">
+                                    <option value="sound_engineering">Live Sound Engineering</option>
+                                    <option value="multi_track_recording">Multi-Track Recording</option>
+                                    <option value="equipment_rental">Equipment Rental</option>
+                                    <option value="consultation">Consultation Services</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Navigation
+        const navMenu = document.getElementById('nav-menu');
+        const mobileToggle = document.getElementById('mobile-toggle');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Page transitions
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = document.getElementById(link.getAttribute('data-page'));
+
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+
+                targetPage.classList.add('active');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                link.classList.add('active');
+
+                // Close mobile menu on link click
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        fadeInElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        const slideInLeftElements = document.querySelectorAll('.slide-in-left');
+        slideInLeftElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        const slideInRightElements = document.querySelectorAll('.slide-in-right');
+        slideInRightElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // Simple fade-in animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on load
+
+        // Add loading states for media
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            const audios = document.querySelectorAll('audio');
+
+            videos.forEach(video => {
+                video.addEventListener('loadstart', function() {
+                    this.style.opacity = '0.7';
+                });
+                video.addEventListener('loadeddata', function() {
+                    this.style.opacity = '1';
+                });
+            });
+
+            audios.forEach(audio => {
+                audio.addEventListener('loadstart', function() {
+                    this.style.opacity = '0.7';
+                });
+                audio.addEventListener('loadeddata', function() {
+                    this.style.opacity = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
