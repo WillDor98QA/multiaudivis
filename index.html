@@ -624,6 +624,25 @@
             .contact-cards {
                 grid-template-columns: 1fr;
             }
+
+            /* Center About Us grid text on mobile */
+            #about .content-section > div[style*="display: grid"] {
+                grid-template-columns: 1fr !important;
+                text-align: center !important;
+                justify-items: center !important;
+                align-items: center !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            #about .slide-in-left,
+            #about .slide-in-right {
+                text-align: center !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+                display: block !important;
+            }
         }
 
         /* Responsive design */
@@ -916,6 +935,18 @@
 
             .audio-item {
                 padding: 2rem;
+            }
+
+            /* Center About Us grid text on mobile */
+            #about .content-section > div[style*="display: grid"] {
+                text-align: center !important;
+            }
+
+            #about .slide-in-left,
+            #about .slide-in-right {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
             }
         }
 
